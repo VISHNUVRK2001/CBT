@@ -1,0 +1,116 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+
+namespace ex10
+{
+    public partial class Form1 : Form
+    {
+        SqlConnection conn;
+        SqlCommand comm;
+        SqlDataReader rd;
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {            
+            conn = new SqlConnection("Data Source=HOD-PC\\SQLEXPRESS1;Initial Catalog=student;Integrated Security=True");
+            
+            comm = new SqlCommand();
+            comm.Connection = conn;
+            conn.Open();
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox3.Clear();
+
+            comboBox1.Visible = false;
+
+            button1.Enabled = true;
+            button2.Enabled = false;
+            button3.Enabled = false;
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            comboBox1.Items.Clear();
+            button1.Enabled = false;
+            button2.Enabled = true;
+            button3.Enabled = true;
+            comboBox1.Visible = true;
+            comm.CommandText = "select * from stud";
+            rd=comm.ExecuteReader();
+
+            while (rd.Read())
+            {
+                comboBox1.Items.Add(rd.GetString(0));
+            }
+            rd.Close();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comm.CommandText = "select * from stud where regno='" + comboBox1.SelectedItem + "'";
+            rd = comm.ExecuteReader();
+            if (rd.Read())
+            {
+                textBox2.Text = rd.GetString(1);
+                textBox3.Text = rd.GetString(2);
+            }
+            rd.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text == "" || textBox2.Text == "" || textBox3.Text == "")
+            {
+                MessageBox.Show("Please fill all the details");
+            }
+            else
+            {
+                comm.CommandText="insert into stud values('"+textBox1.Text+"', '"+textBox2.Text+"', '"+textBox3.Text+"')";
+                comm.ExecuteNonQuery();
+                MessageBox.Show("Record inserted");
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            comm.CommandText = "delete from stud where regno='" + comboBox1.SelectedItem + "'";
+            rd = comm.ExecuteReader();
+            comboBox1.Items.Remove(comboBox1.SelectedItem);
+            textBox2.Clear();
+            textBox3.Clear();
+            MessageBox.Show("Record Deleted");
+        }
+       
+        private void button3_Click(object sender, EventArgs e)
+        {
+            comm.CommandText = "update stud set name='" + textBox2.Text + "', dept='" + textBox3.Text + "' where regno='" + comboBox1.SelectedItem + "'";
+            comm.ExecuteNonQuery();
+            MessageBox.Show("Record updated");
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+      
+    }
+}
+
