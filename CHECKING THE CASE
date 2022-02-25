@@ -1,0 +1,29 @@
+using System;
+ class Exercise1
+ {
+    public static void Main()
+    {
+
+        Console.WriteLine("CHECK THE CASE OF THE ENTERED CHARACTER");
+        Console.WriteLine("---------------------------------------");
+        
+        Console.WriteLine("Input a character: ");
+        char ch = (char)Console.Read( );
+        
+        if (Char.IsLetter(ch))
+        {
+                    if (Char.IsUpper(ch))
+                    {
+                      Console.WriteLine("The character is uppercase");
+                    }
+                    else
+                    {
+                      Console.WriteLine("The character is lowercase");
+                    }
+        }
+        else
+        {
+           Console.WriteLine("Entered character is not an alphabet");
+        }
+    }
+ }
