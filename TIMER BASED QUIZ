@@ -1,0 +1,121 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace ExNo7_TimerBasedQuiz
+{
+publicpartialclassForm1 : Form
+    {
+String[,] quest = new String[5, 4];
+String[,] ans = new String[5, 2];
+int i = -1;
+
+public Form1()
+        {
+            InitializeComponent();
+        }
+
+privatevoid Form1_Load(object sender, EventArgs e)
+        {
+MessageBox.Show("welcome");
+
+            quest[0, 0] = "Which one of the following is a browser?";
+            quest[0, 1] = "Visual Basic";
+            quest[0, 2] = "C#";
+            quest[0, 3] = "Internet Explorer";
+            quest[1, 0] = "----------- is a .NET language";
+            quest[1, 1] = "C";
+            quest[1, 2] = "C++";
+            quest[1, 3] = "C#.NET ";
+            quest[2, 0] = "Windows form is used to create--------------";
+            quest[2, 1] = "Web application";
+            quest[2, 2] = "Windows application";
+            quest[2, 3] = "Both";
+            quest[3, 0] = “Which one can be a front end software?";
+            quest[3, 1] = "C#.NET";
+            quest[3, 2] = "MySQL";
+            quest[3, 3] = "MSAccess";
+            quest[4, 0] = "--------------- can be used as a backend software.”
+            quest[4, 1] = "VB.Net";
+            quest[4, 2] = "VC++";
+            quest[4, 3] = "SQLServer";
+            ans[0, 0] = "Internet Explorer";
+            ans[1, 0] = "C#.NET";
+            ans[2, 0] = "Windows application";
+            ans[3, 0] = "C#.NET";
+            ans[4, 0] = "SQLServer";
+            timer1.Enabled = true;
+            button1.Enabled = false;
+
+        }
+privatevoid timer1_Tick(object sender, EventArgs e)
+        {
+             i = i + 1;
+if(i==5)
+             {
+                timer1.Enabled = false;
+                button1.Enabled = true;
+             }
+else
+             {
+                 radioButton1.Checked = false;
+                 radioButton2.Checked = false;
+                 radioButton3.Checked = false;
+                 textBox1.Text = quest[i, 0];
+                 radioButton1.Text = quest[i, 1];
+                 radioButton2.Text = quest[i, 2];
+                 radioButton3.Text = quest[i, 3];
+             }
+        }
+
+privatevoid radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            ans[i, 1] = radioButton1.Text;
+
+        }
+privatevoid radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            ans[i, 1] = radioButton2.Text;
+
+        }
+
+privatevoid radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            ans[i, 1] = radioButton3.Text;
+
+        }
+
+privatevoid button1_Click(object sender, EventArgs e)
+        {
+            int j;
+int count = 0;
+for (j = 0; j < 5; j++)
+if (ans[j, 0] == ans[j, 1])
+                {
+                    count += 1;
+                }
+
+MessageBox.Show("You have Scored " + count + " marks");
+
+        }
+
+privatevoid button2_Click(object sender, EventArgs e)
+        {
+Application.Exit();
+        }
+
+privatevoid button3_Click(object sender, EventArgs e)
+        {
+MessageBox.Show(ans[0, 1]);        
+MessageBox.Show(ans[1, 1]); 
+MessageBox.Show(ans[2, 1]); 
+MessageBox.Show(ans[3, 1]);
+MessageBox.Show(ans[4, 1]); 
+        }
+    }
+}
