@@ -1,0 +1,24 @@
+using System;
+
+   class Program2
+    {
+       public static void Main()
+        {
+
+            char letter;
+            
+            Console.WriteLine("Please input a letter:");
+            letter = (char)Console.Read( );
+            letter = Char.ToUpper(letter);
+
+            if (letter == 'A' || letter == 'E' || letter == 'I' || letter == 'O' || letter == 'U')
+            {
+                Console.WriteLine("Its a vowel");
+            }
+            else
+            {
+                Console.WriteLine("Its not a vowel");
+            }
+            
+        }
+    }
